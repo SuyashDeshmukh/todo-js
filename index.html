@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.0/css/bootstrap.min.css" integrity="sha384-9gVQ4dYFwwWSjIDZnLEWnxCjeSWFphJiwGPXr1jddIhOegiu1FwO5qRGvFXOdJZ4"
+        crossorigin="anonymous">
+    <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo"
+        crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.0/umd/popper.min.js" integrity="sha384-cs/chFZiN24E4KMATLdqdvsezGxaGsi4hLGOzlXwp5UZB1LY//20VyM2taTB4QvJ"
+        crossorigin="anonymous"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.0/js/bootstrap.min.js" integrity="sha384-uefMccjFJAIv6A+rW+L4AHf99KvxDjWSu1z9VI8SKNVmz4sk7buKt/6v9KI65qnm"
+        crossorigin="anonymous"></script>
+    <title>Todo App</title>
+</head>
+
+<body>
+    <div class="container">
+        <div class="row">
+            <div class="col-md-6 m-auto">
+                <h1 class="text-center display-4 my-4">Todo App</h1>
+                <div class="container m-auto">
+                    <div class="input-group mb-3">
+                        <input type="text" class="form-control" placeholder="Enter Task" aria-label="Task" aria-describedby="basic-addon1" id="task-item">
+                    </div>
+                    <div id="tasks">
+
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <script>
+        var tasks = document.getElementById('tasks');
+        var task = document.getElementById('task-item');
+        var i = 1;
+        task.addEventListener('keypress', function (event) {
+            if (event.keyCode == 13) {
+                console.log(event);
+                i++;
+                //tasks.push(task.innerHTML);
+
+                // Create Card
+                var newcard = document.createElement('div');
+                newcard.classList = 'card card-body mb-2';
+
+                // Create Card body - inline block
+                var newtask = document.createElement('div');;
+                newtask.classList = 'd-inline-block';
+                newtask.innerText = task.value;
+                newcard.appendChild(newtask);
+
+                // Create Done button
+                var donebtn = document.createElement('button');
+                donebtn.setAttribute('type', 'button');
+                donebtn.setAttribute('aria-label', 'Done');
+                donebtn.setAttribute('id', 'done' + i);
+                donebtn.classList = 'close mx-4';
+
+                //Create Span inside button
+                var dsp = document.createElement('span');
+                dsp.setAttribute('aria-hidden', 'true');
+                dsp.innerText = '✓';
+
+                // Event Listener to delete button
+                donebtn.addEventListener('click', function (event) {
+                    this.parentElement.style.textDecoration = 'line-through';
+                    this.style.color = 'green';
+                });
+
+                // Create Delete button
+                var btn = document.createElement('button');
+                btn.setAttribute('type', 'button');
+                btn.setAttribute('aria-label', 'Close');
+                btn.setAttribute('id', 'close' + i);
+                btn.classList = 'close';
+
+                //Create Span inside button
+                var sp = document.createElement('span');
+                sp.setAttribute('aria-hidden', 'true');
+                sp.innerText = '×';
+
+                donebtn.appendChild(dsp);
+                btn.appendChild(sp);
+
+                newtask.appendChild(btn);
+                newtask.appendChild(donebtn);
+
+
+                // Event Listener to delete button
+                btn.addEventListener('click', function (event) {
+                    tasks.removeChild(this.parentElement.parentElement);
+                });
+
+                tasks.insertBefore(newcard, tasks.firstChild);
+                task.value = '';
+            }
+        });
+    </script>
+</body>
+
+</html>
